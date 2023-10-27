@@ -1,0 +1,13 @@
+package aaronfortuno.ioc.muuvis.data.repository
+
+import aaronfortuno.ioc.muuvis.data.dao.MovieDao
+import aaronfortuno.ioc.muuvis.data.entity.MovieEntity
+import androidx.lifecycle.LiveData
+
+class MovieRepositoryImpl(
+    private val movieDao: MovieDao
+) : MovieRepository {
+    override fun getAllMovies(): LiveData<List<MovieEntity>> {
+        return movieDao.getAllMovies()
+    }
+}
