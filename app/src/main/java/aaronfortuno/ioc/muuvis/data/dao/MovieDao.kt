@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface MovieDao {
@@ -14,10 +16,13 @@ interface MovieDao {
     fun getAllMovies(): LiveData<List<MovieEntity>>
 
     @Query("SELECT * FROM movies WHERE id = :movieId")
-    fun getMovie(movieId: Int): MovieEntity
+    fun getMovieById(movieId: Int): MovieEntity?
 
-    @Insert
-    fun insertMovie(movie: MovieEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovie(movie: MovieEntity): Long
+
+    @Update
+    fun updateMovie(movie: MovieEntity)
 
     @Delete
     fun deleteMovie(movie: MovieEntity)
