@@ -13,10 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,7 +35,9 @@ fun AddMovieDialog(
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var imageUrl by remember { mutableStateOf("") }
-
+    
+    val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
+    
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(text = "add movie") },
@@ -39,24 +48,25 @@ fun AddMovieDialog(
                     onValueChange = { title = it },
                     label = { Text("title")}
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = description,
-                    onValueChange = { title = it },
+                    onValueChange = { description = it },
                     label = { Text("description")}
                 )
                 OutlinedTextField(
                     value = imageUrl,
-                    onValueChange = { title = it },
+                    onValueChange = { imageUrl = it },
                     label = { Text("image url")}
                 )
             }
         },
         confirmButton = {
             Button(onClick = {
-                viewModel.addMovie(title, description, imageUrl)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.addMovie(title, description, imageUrl)
+                }
             }) {
-
+                Text(text = "add")
             }
         })
 }

@@ -11,7 +11,7 @@ class MovieRepositoryImpl(
         return movieDao.getAllMovies()
     }
 
-    override fun insertNewMovie(movie: MovieEntity) {
+    override suspend fun insertNewMovie(movie: MovieEntity) {
         movieDao.insertMovie(movie)
     }
 }

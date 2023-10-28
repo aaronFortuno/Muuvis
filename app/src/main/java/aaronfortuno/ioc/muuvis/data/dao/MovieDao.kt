@@ -16,14 +16,14 @@ interface MovieDao {
     fun getAllMovies(): LiveData<List<MovieEntity>>
 
     @Query("SELECT * FROM movies WHERE id = :movieId")
-    fun getMovieById(movieId: Int): MovieEntity?
+    suspend fun getMovieById(movieId: Int): MovieEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie: MovieEntity): Long
+    suspend fun insertMovie(movie: MovieEntity): Long
 
     @Update
-    fun updateMovie(movie: MovieEntity)
+    suspend fun updateMovie(movie: MovieEntity)
 
     @Delete
-    fun deleteMovie(movie: MovieEntity)
+    suspend fun deleteMovie(movie: MovieEntity)
 }

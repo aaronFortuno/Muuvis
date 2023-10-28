@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import aaronfortuno.ioc.muuvis.ui.theme.MuuvisTheme
+import aaronfortuno.ioc.muuvis.ui.view.dialogs.AddMovieDialog
 import aaronfortuno.ioc.muuvis.ui.viewmodel.MovieViewModel
 import aaronfortuno.ioc.muuvis.ui.viewmodel.ViewModelFactory
 import androidx.activity.viewModels
@@ -25,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -42,27 +44,22 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MuuvisApp()
+                    MuuvisApp(viewModel = viewModel)
                 }
             }
         }
     }
 }
 
-val sampleMovies = listOf(
-    MovieEntity(1, "Pelicula 1", "Descripción 1", "film1_davinci"),
-    MovieEntity(2, "Pelicula 2", "Descripción 2", "film2_picasso"),
-    MovieEntity(3, "Pelicula 3", "Descripción 3", "film3_manet")
-)
 @Composable
-fun MuuvisApp() {
+fun MuuvisApp(viewModel: MovieViewModel) {
     val showDialog = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        MovieList(sampleMovies)
+        MovieList(viewModel)
 
         // FAB
         FloatingActionButton(
@@ -79,14 +76,9 @@ fun MuuvisApp() {
     }
 
     if (showDialog.value) {
-
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MuuvisPreview() {
-    MuuvisTheme {
-        MuuvisApp()
+        AddMovieDialog(
+            onDismiss = { showDialog.value = false },
+            viewModel = viewModel
+        )
     }
 }
