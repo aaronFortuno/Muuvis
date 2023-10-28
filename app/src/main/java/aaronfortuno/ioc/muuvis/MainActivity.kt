@@ -16,6 +16,16 @@ import aaronfortuno.ioc.muuvis.ui.theme.MuuvisTheme
 import aaronfortuno.ioc.muuvis.ui.viewmodel.MovieViewModel
 import aaronfortuno.ioc.muuvis.ui.viewmodel.ViewModelFactory
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     private val repository = MovieRepositoryImpl(App.db.movieDao())
@@ -46,7 +56,31 @@ val sampleMovies = listOf(
 )
 @Composable
 fun MuuvisApp() {
-    MovieList(sampleMovies)
+    val showDialog = remember { mutableStateOf(false) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        MovieList(sampleMovies)
+
+        // FAB
+        FloatingActionButton(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            onClick = { showDialog.value = true }
+        ){
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "add movie"
+            )
+        }
+    }
+
+    if (showDialog.value) {
+
+    }
 }
 
 @Preview(showBackground = true)

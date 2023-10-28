@@ -10,4 +10,8 @@ class MovieRepositoryImpl(
     override fun getAllMovies(): LiveData<List<MovieEntity>> {
         return movieDao.getAllMovies()
     }
+
+    override fun insertNewMovie(movie: MovieEntity) {
+        movieDao.insertMovie(movie)
+    }
 }

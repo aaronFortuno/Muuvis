@@ -5,4 +5,6 @@ import androidx.lifecycle.LiveData
 
 interface MovieRepository {
     fun getAllMovies(): LiveData<List<MovieEntity>>
+
+    fun insertNewMovie(movie: MovieEntity)
 }
