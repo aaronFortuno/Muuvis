@@ -1,8 +1,12 @@
 package aaronfortuno.ioc.muuvis
 
+import aaronfortuno.ioc.muuvis.data.auth.AuthManager
 import aaronfortuno.ioc.muuvis.ui.theme.MuuvisTheme
 import aaronfortuno.ioc.muuvis.ui.theme.aclonica
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -33,10 +37,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,10 +63,17 @@ class LoginActivity : ComponentActivity() {
     }
 }
 
+val authManager = AuthManager()
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Login() {
     val imageResource = painterResource(id = R.drawable.film1_davinci)
+
+    val (email, setEmail) = remember { mutableStateOf("") }
+    val (password, setPassword) = remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -77,7 +89,6 @@ fun Login() {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 40.dp, bottom = 40.dp)
-                .shadow(6.dp)
         )
 
         Card(
@@ -108,8 +119,6 @@ fun Login() {
                         .align(Alignment.BottomStart)
                         .fillMaxWidth()
                 ) {
-                    val (email, setEmail) = remember { mutableStateOf("") }
-                    val (password, setPassword) = remember { mutableStateOf("") }
                     TextField(
                         value = email,
                         onValueChange = { setEmail(it)},
@@ -127,6 +136,7 @@ fun Login() {
                         label = { Text( "your password") },
                         singleLine = true,
                         textStyle = MaterialTheme.typography.headlineLarge,
+                        visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier
                             .fillMaxWidth()
                             .alpha(0.8f)
@@ -143,9 +153,10 @@ fun Login() {
                 .padding(16.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
+
             Button(
                 onClick = {
-
+                    authManager.login(email = email, password = password)
                 },
                 modifier = Modifier
                     .weight(1f)
@@ -157,7 +168,17 @@ fun Login() {
             Spacer(modifier = Modifier.width(16.dp))
             Button(
                 onClick = {
-
+                    authManager.register(email = email, password = password) { success ->
+                        if (success) {
+                            val intent = Intent(
+                                context, MainActivity::class.java
+                            )
+                            context.startActivity(intent)
+                            (context as Activity).finish()
+                        } else {
+                            Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 },
                 modifier = Modifier
                     .weight(1f)
