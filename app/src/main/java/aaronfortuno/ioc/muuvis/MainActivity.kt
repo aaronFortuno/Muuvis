@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MuuvisApp() {
-    MovieList()
+    // MovieList()
 }
 
 @Preview(showBackground = true)
