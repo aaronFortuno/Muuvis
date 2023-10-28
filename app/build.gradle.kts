@@ -74,6 +74,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.room:room-ktx:2.6.0")
+
+    implementation("io.coil-kt:coil-compose:2.2.0")
 }
 
 apply(plugin = "com.google.gms.google-services")
