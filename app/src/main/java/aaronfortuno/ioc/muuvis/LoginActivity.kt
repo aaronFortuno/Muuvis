@@ -156,7 +156,17 @@ fun Login() {
 
             Button(
                 onClick = {
-                    authManager.login(email = email, password = password)
+                    authManager.login(email = email, password = password) { success ->
+                        if (success) {
+                            val intent = Intent(
+                                context, MainActivity::class.java
+                            )
+                            context.startActivity(intent)
+                            (context as Activity).finish()
+                        } else {
+                            Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 },
                 modifier = Modifier
                     .weight(1f)
@@ -170,11 +180,7 @@ fun Login() {
                 onClick = {
                     authManager.register(email = email, password = password) { success ->
                         if (success) {
-                            val intent = Intent(
-                                context, MainActivity::class.java
-                            )
-                            context.startActivity(intent)
-                            (context as Activity).finish()
+                            Toast.makeText(context, "Successful registration! Now you can login!", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show()
                         }

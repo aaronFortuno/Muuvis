@@ -1,5 +1,6 @@
 package aaronfortuno.ioc.muuvis
 
+import aaronfortuno.ioc.muuvis.data.entity.MovieEntity
 import aaronfortuno.ioc.muuvis.data.repository.MovieRepositoryImpl
 import aaronfortuno.ioc.muuvis.ui.view.MovieList
 import android.os.Bundle
@@ -38,10 +39,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+val sampleMovies = listOf(
+    MovieEntity(1, "Pelicula 1", "Descripción 1", "film1_davinci"),
+    MovieEntity(2, "Pelicula 2", "Descripción 2", "film2_picasso"),
+    MovieEntity(3, "Pelicula 3", "Descripción 3", "film3_manet")
+)
 @Composable
 fun MuuvisApp() {
-    // MovieList()
+    MovieList(sampleMovies)
 }
 
 @Preview(showBackground = true)
