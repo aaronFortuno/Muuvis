@@ -1,4 +1,4 @@
-package aaronfortuno.ioc.muuvis.util
+package aaronfortuno.ioc.muuvis.util.image
 
 import android.net.Uri
 import androidx.activity.ComponentActivity

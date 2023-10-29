@@ -7,9 +7,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun RemoveMovieDialog(
@@ -22,14 +25,36 @@ fun RemoveMovieDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(text = "remove movie") },
-        text = { "this can't be undone!" },
+        text = { 
+               Text(text = "be careful, this can't be undone!")
+               },
         confirmButton = {
             Button(onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
                     viewModel.deleteMovie(movie)
+                    withContext(Dispatchers.Main) {
+                        onDismiss()
+                    }
                 }
             }) {
                 Text(text = "DELETE")
             }
         })
 }
+
+/* En la definición de la MovieCard:
+
+Card(
+        border = BorderStroke(1.dp, Color.Gray),
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .clip(shape = RoundedCornerShape(8.dp))
+            .shadow(3.dp)
+            .combinedClickable(
+                onClick = { /* TODO open card */ },
+                onLongClick = { showDialog = true }
+            )
+    ) { // código de la card ... }
+ */

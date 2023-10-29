@@ -4,6 +4,8 @@ import aaronfortuno.ioc.muuvis.App
 import aaronfortuno.ioc.muuvis.data.entity.MovieEntity
 import aaronfortuno.ioc.muuvis.data.repository.MovieRepository
 import aaronfortuno.ioc.muuvis.data.repository.MovieRepositoryImpl
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +16,17 @@ class MovieViewModel(
 ) : ViewModel() {
     val allMovies: LiveData<List<MovieEntity>> = repository.getAllMovies()
 
+    private val imageViewModel = ImageViewModel()
+
+    suspend fun addMovieWithUri(
+        context: Context,
+        title: String,
+        description: String,
+        imageUri: Uri?
+    ) {
+        val imageUrlFromGCS = imageViewModel.uploadImageFromUri(context, imageUri!!)
+        addMovie(title, description, imageUrlFromGCS)
+    }
     suspend fun addMovie(
         title: String,
         description: String,
