@@ -3,6 +3,7 @@ package aaronfortuno.ioc.muuvis.ui.view
 import aaronfortuno.ioc.muuvis.data.entity.MovieEntity
 import aaronfortuno.ioc.muuvis.ui.theme.MuuvisTheme
 import aaronfortuno.ioc.muuvis.util.CoilImageComponent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +36,7 @@ fun MovieCard(
     )
 ) {
     Card(
+        border = BorderStroke(1.dp, Color.Gray),
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
@@ -43,15 +46,13 @@ fun MovieCard(
     ) {
         Box(
             modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.primaryContainer)
                 .fillMaxSize()
         ) {
             CoilImageComponent(
                 imageUrl = movie.imageUrl,
                 modifier = Modifier
-                    .padding(20.dp)
                     .fillMaxSize()
-                    .background(Color.Gray)
+                    .background(Color.LightGray)
             )
             Column(
                 modifier = Modifier
@@ -60,7 +61,6 @@ fun MovieCard(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(20.dp)
                         .background(Color.Black.copy(alpha = 0.4F))
                 ) {
                     Column(

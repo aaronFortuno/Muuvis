@@ -8,13 +8,14 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import java.io.InputStream
 
 object ImageUtil {
-    fun Context.getPathFromUri(uri: Uri): String? {
+    fun getPathFromUri(context: Context, uri: Uri): String? {
         var cursor: Cursor? = null
         try {
             val proj = arrayOf(MediaStore.Images.Media.DATA)
-            cursor = contentResolver.query(uri, proj, null, null, null)
+            cursor = context.contentResolver.query(uri, proj, null, null, null)
             val columnIndex = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
             cursor?.moveToFirst()
             return cursor?.getString(columnIndex!!)
@@ -23,7 +24,7 @@ object ImageUtil {
         }
     }
 
-    fun chooseImageFromGallery(
+    /*fun chooseImageFromGallery(
         activity: ComponentActivity,
         onImageSelected: (Uri) -> Unit
     ) {
@@ -33,6 +34,7 @@ object ImageUtil {
             if (result.resultCode == Activity.RESULT_OK) {
                 val uri = result.data?.data
                 uri?.let {
+                    val inputStream = getInputStreamFromUri(activity, it)
                     onImageSelected(it)
                 }
             }
@@ -42,7 +44,14 @@ object ImageUtil {
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
         pickImage.launch(intent)
-    }
+    }*/
+}
+
+fun getInputStreamFromUri(
+    context: Context,
+    uri: Uri
+) : InputStream? {
+    return context.contentResolver.openInputStream(uri)
 }
 
 // EXEMPLE D'IMPLEMENTACIÓ A ALTRES CLASSES

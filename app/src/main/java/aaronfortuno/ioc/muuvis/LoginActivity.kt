@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -37,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -92,16 +94,16 @@ fun Login() {
         )
 
         Card(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .clip(shape = RoundedCornerShape(8.dp))
-                    .shadow(3.dp)
-                ) {
+            border = BorderStroke(1.dp, Color.Gray),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .clip(shape = RoundedCornerShape(8.dp))
+                .shadow(3.dp)
+        ) {
             Box(
                 modifier = Modifier
-                    .background(color = MaterialTheme.colorScheme.primaryContainer)
                     .fillMaxSize()
             ) {
                 Image(
@@ -109,19 +111,17 @@ fun Login() {
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .padding(20.dp)
                         .fillMaxSize()
                         .alpha(0.3f)
                 )
                 Column(
                     modifier = Modifier
-                        .padding(20.dp)
                         .align(Alignment.BottomStart)
                         .fillMaxWidth()
                 ) {
                     TextField(
                         value = email,
-                        onValueChange = { setEmail(it)},
+                        onValueChange = { setEmail(it) },
                         label = { Text("your email") },
                         singleLine = true,
                         textStyle = MaterialTheme.typography.headlineLarge,
@@ -133,7 +133,7 @@ fun Login() {
                     TextField(
                         value = password,
                         onValueChange = { setPassword(it) },
-                        label = { Text( "your password") },
+                        label = { Text("your password") },
                         singleLine = true,
                         textStyle = MaterialTheme.typography.headlineLarge,
                         visualTransformation = PasswordVisualTransformation(),
@@ -180,7 +180,11 @@ fun Login() {
                 onClick = {
                     authManager.register(email = email, password = password) { success ->
                         if (success) {
-                            Toast.makeText(context, "Successful registration! Now you can login!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Successful registration! Now you can login!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
                             Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show()
                         }
