@@ -1,9 +1,10 @@
 package aaronfortuno.ioc.muuvis.ui.view.dialogs
 
-import aaronfortuno.ioc.muuvis.ui.viewmodel.ImageViewModel
 import aaronfortuno.ioc.muuvis.ui.viewmodel.MovieViewModel
-import aaronfortuno.ioc.muuvis.util.image.ImagePicker
+import aaronfortuno.ioc.muuvis.util.ImagePicker
+import aaronfortuno.ioc.muuvis.util.ImageUtil
 import android.net.Uri
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
@@ -71,16 +72,9 @@ fun AddMovieDialog(
         },
         confirmButton = {
             Button(onClick = {
-                val imageUri = selectedImageUri.value
-                val imageViewModel= ImageViewModel()
+                val finalImagePath = selectedImageUri.value?.let { ImageUtil.getPathFromUri(context, it) }
                 lifecycleScope.launch(Dispatchers.IO) {
-                    val imageUrlFromGCS = imageUri?.let { uri ->
-                        imageViewModel.uploadImageFromUri(context, uri)
-                    } ?: ""
-                    viewModel.addMovie(title, description, imageUrlFromGCS)
-                    withContext(Dispatchers.Main) {
-                        onDismiss()
-                    }
+                    viewModel.addMovie(title, description, finalImagePath ?: "")
                 }
             }) {
                 Text(text = "add")

@@ -2,7 +2,6 @@ package aaronfortuno.ioc.muuvis.ui.view
 
 import aaronfortuno.ioc.muuvis.data.entity.MovieEntity
 import aaronfortuno.ioc.muuvis.ui.theme.MuuvisTheme
-import aaronfortuno.ioc.muuvis.ui.view.cards.MovieCard
 import aaronfortuno.ioc.muuvis.ui.viewmodel.MovieViewModel
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
