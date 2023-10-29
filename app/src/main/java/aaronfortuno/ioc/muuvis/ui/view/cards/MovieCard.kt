@@ -1,10 +1,13 @@
-package aaronfortuno.ioc.muuvis.ui.view
+package aaronfortuno.ioc.muuvis.ui.view.cards
 
 import aaronfortuno.ioc.muuvis.data.entity.MovieEntity
 import aaronfortuno.ioc.muuvis.ui.theme.MuuvisTheme
-import aaronfortuno.ioc.muuvis.util.CoilImageComponent
+import aaronfortuno.ioc.muuvis.ui.view.dialogs.RemoveMovieDialog
+import aaronfortuno.ioc.muuvis.util.image.CoilImageComponent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -13,10 +16,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieCard(
     movie: MovieEntity = MovieEntity(
@@ -35,6 +42,10 @@ fun MovieCard(
         "ic_launcher_background"
     )
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+    if (showDialog) {
+        RemoveMovieDialog(movie = movie)
+    }
     Card(
         border = BorderStroke(1.dp, Color.Gray),
         modifier = Modifier
@@ -43,6 +54,10 @@ fun MovieCard(
             .aspectRatio(1f)
             .clip(shape = RoundedCornerShape(8.dp))
             .shadow(3.dp)
+            .combinedClickable(
+                onClick = { },
+                onLongClick = { showDialog = true }
+            )
     ) {
         Box(
             modifier = Modifier

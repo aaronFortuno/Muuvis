@@ -1,28 +1,49 @@
-package aaronfortuno.ioc.muuvis.util
+package aaronfortuno.ioc.muuvis.util.image
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
-import android.provider.MediaStore
-import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
+import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
+import java.io.OutputStream
 
 object ImageUtil {
-    fun getPathFromUri(context: Context, uri: Uri): String? {
+
+    fun InputStream.copyTo(out: OutputStream, bufferSize: Int = DEFAULT_BUFFER_SIZE): Long {
+        var bytesCopied: Long = 0
+        val buffer = ByteArray(bufferSize)
+        var bytes = read(buffer)
+        while (bytes >= 0) {
+            out.write(buffer, 0, bytes)
+            bytesCopied += bytes
+            bytes = read(buffer)
+        }
+        return bytesCopied
+    }
+    fun uriToFile(context: Context, uri: Uri): File {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val file = File(context.cacheDir, "tempImage.jpg")
+        inputStream?.use {
+            val outputStream = FileOutputStream(file)
+            it.copyTo(outputStream)
+        }
+        return file
+    }
+
+
+    /*fun getPathFromUri(context: Context, uri: Uri): String? {
         var cursor: Cursor? = null
         try {
             val proj = arrayOf(MediaStore.Images.Media.DATA)
             cursor = context.contentResolver.query(uri, proj, null, null, null)
             val columnIndex = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
             cursor?.moveToFirst()
+            Log.d("ImageUtil.getPathFromUri", "cursor: ${cursor?.getString(columnIndex!!)}")
             return cursor?.getString(columnIndex!!)
         } finally {
             cursor?.close()
         }
-    }
+    }*/
 
     /*fun chooseImageFromGallery(
         activity: ComponentActivity,
