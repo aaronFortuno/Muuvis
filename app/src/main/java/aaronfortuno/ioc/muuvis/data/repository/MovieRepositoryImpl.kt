@@ -14,4 +14,8 @@ class MovieRepositoryImpl(
     override suspend fun insertNewMovie(movie: MovieEntity) {
         movieDao.insertMovie(movie)
     }
+
+    override suspend fun deleteMovie(movie: MovieEntity) {
+        movieDao.deleteMovie(movie)
+    }
 }

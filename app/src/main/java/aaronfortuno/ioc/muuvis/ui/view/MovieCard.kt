@@ -98,6 +98,6 @@ fun MovieCard(
 @Composable
 fun MovieCardPreview() {
     MuuvisTheme {
-        MovieCard()
+        // MovieCard()
     }
 }

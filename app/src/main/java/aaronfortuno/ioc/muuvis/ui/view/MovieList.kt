@@ -26,7 +26,7 @@ fun MovieList(viewModel: MovieViewModel) {
         .padding(16.dp)
     ) {
         itemsIndexed(movies) { index, movie ->
-            MovieCard()
+            MovieCard(movie, viewModel)
         }
     }
 }
@@ -37,6 +37,6 @@ fun MovieList(viewModel: MovieViewModel) {
 @Composable
 fun MovieListPreview() {
     MuuvisTheme {
-        // MovieList(movies = sampleMovies)
+        // MovieList()
     }
 }
