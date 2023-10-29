@@ -1,6 +1,5 @@
 package aaronfortuno.ioc.muuvis.ui.view.dialogs
 
-import aaronfortuno.ioc.muuvis.data.dao.MovieDao
 import aaronfortuno.ioc.muuvis.data.entity.MovieEntity
 import aaronfortuno.ioc.muuvis.ui.viewmodel.MovieViewModel
 import androidx.compose.material3.AlertDialog
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 fun RemoveMovieDialog(
     movie: MovieEntity,
     onDismiss: () -> Unit,
-    onDelete: (MovieEntity) -> Unit
+    viewModel: MovieViewModel
 ) {
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
 
@@ -27,8 +26,7 @@ fun RemoveMovieDialog(
         confirmButton = {
             Button(onClick = {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    onDelete(movie)
-                    onDismiss()
+                    viewModel.deleteMovie(movie)
                 }
             }) {
                 Text(text = "DELETE")
