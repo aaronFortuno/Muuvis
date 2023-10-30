@@ -41,20 +41,3 @@ fun RemoveMovieDialog(
             }
         })
 }
-
-/* En la definición de la MovieCard:
-
-Card(
-        border = BorderStroke(1.dp, Color.Gray),
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .clip(shape = RoundedCornerShape(8.dp))
-            .shadow(3.dp)
-            .combinedClickable(
-                onClick = { /* TODO open card */ },
-                onLongClick = { showDialog = true }
-            )
-    ) { // código de la card ... }
- */

@@ -3,13 +3,16 @@ package aaronfortuno.ioc.muuvis.ui.view
 import aaronfortuno.ioc.muuvis.data.entity.MovieEntity
 import aaronfortuno.ioc.muuvis.ui.theme.MuuvisTheme
 import aaronfortuno.ioc.muuvis.ui.viewmodel.MovieViewModel
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -18,17 +21,34 @@ val sampleMovies = listOf(
     MovieEntity(2, "Pelicula 2", "Descripción 2", "film2_picasso"),
     MovieEntity(3, "Pelicula 3", "Descripción 3", "film3_manet")
 )
+
 @Composable
 fun MovieList(viewModel: MovieViewModel) {
     val movies = viewModel.allMovies.observeAsState(initial = emptyList()).value
-    LazyColumn(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)
-    ) {
-        itemsIndexed(movies) { index, movie ->
-            MovieCard(movie, viewModel)
+    var configuration = LocalConfiguration.current
+    var isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    if (isLandscape) {
+        LazyRow(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+        ) {
+            itemsIndexed(movies) { index, movie ->
+                MovieCard(movie, viewModel)
+            }
+        }
+    } else {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+        ) {
+            itemsIndexed(movies) { index, movie ->
+                MovieCard(movie, viewModel)
+            }
         }
     }
+
+
 }
 
 @Preview(
