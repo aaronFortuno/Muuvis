@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AlternativeMovieCard(
+fun MovieCard(
     movie: MovieEntity,
     viewModel: MovieViewModel
 ) {

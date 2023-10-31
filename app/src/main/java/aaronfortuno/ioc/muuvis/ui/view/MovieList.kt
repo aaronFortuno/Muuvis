@@ -1,7 +1,7 @@
 package aaronfortuno.ioc.muuvis.ui.view
 
 import aaronfortuno.ioc.muuvis.ui.theme.MuuvisTheme
-import aaronfortuno.ioc.muuvis.ui.view.cards.AlternativeMovieCard
+import aaronfortuno.ioc.muuvis.ui.view.cards.MovieCard
 import aaronfortuno.ioc.muuvis.ui.viewmodel.MovieViewModel
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +25,7 @@ fun MovieList(viewModel: MovieViewModel) {
             .fillMaxSize()
         ) {
             itemsIndexed(movies) { _, movie ->
-                AlternativeMovieCard(movie, viewModel)
+                MovieCard(movie, viewModel)
             }
         }
     } else {
@@ -33,7 +33,7 @@ fun MovieList(viewModel: MovieViewModel) {
             .fillMaxSize()
         ) {
             itemsIndexed(movies) { _, movie ->
-                AlternativeMovieCard(movie, viewModel)
+                MovieCard(movie, viewModel)
             }
         }
     }
