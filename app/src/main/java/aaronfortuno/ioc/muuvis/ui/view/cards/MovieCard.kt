@@ -261,14 +261,6 @@ fun CardContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.Black.copy(alpha = 0.4F))
-                    /*.background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                Color.Black.copy(alpha = 0.4F)
-                            ),
-                        )
-                    )*/
             ) {
                 Column(
                     modifier = Modifier
