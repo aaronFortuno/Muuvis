@@ -13,11 +13,11 @@ import java.io.File
 class ImageViewModel : ViewModel() {
     private val repository = ImageRepository()
 
-    fun uploadImage(file: File): Call<ResponseBody> {
+    private fun uploadImage(file: File): Call<ResponseBody> {
         return repository.uploadImage(file)
     }
 
-    suspend fun uploadImageFromUri(context: Context, uri: Uri): String {
+    fun uploadImageFromUri(context: Context, uri: Uri): String {
         val file = ImageUtil.uriToFile(context, uri)
         val hashName = calculateHash(file) + ".jpg"
         val renamedFile = File(file.parentFile, hashName)

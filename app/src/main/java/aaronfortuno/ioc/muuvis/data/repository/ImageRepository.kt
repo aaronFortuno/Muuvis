@@ -1,10 +1,8 @@
 package aaronfortuno.ioc.muuvis.data.repository
 
 import aaronfortuno.ioc.muuvis.util.api.RetrofitInstance
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call

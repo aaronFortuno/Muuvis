@@ -4,8 +4,6 @@ import aaronfortuno.ioc.muuvis.ui.viewmodel.ImageViewModel
 import aaronfortuno.ioc.muuvis.ui.viewmodel.MovieViewModel
 import aaronfortuno.ioc.muuvis.util.image.ImagePicker
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -34,7 +32,7 @@ fun AddMovieDialog(
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var imageUrl by remember { mutableStateOf("") }
+    // var imageUrl by remember { mutableStateOf("") }
     
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
 
@@ -42,11 +40,14 @@ fun AddMovieDialog(
         mutableStateOf<Uri?>(null)
     }
 
+    /*
     val pickImage = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         selectedImageUri.value = uri
     }
+    */
+
     val context = LocalContext.current
 
     AlertDialog(
@@ -77,7 +78,15 @@ fun AddMovieDialog(
                     val imageUrlFromGCS = imageUri?.let { uri ->
                         imageViewModel.uploadImageFromUri(context, uri)
                     } ?: ""
-                    viewModel.addMovie(title, description, imageUrlFromGCS)
+                    viewModel.addMovie(
+                        title,
+                        genre = "",
+                        duration = 0,
+                        year = 0,
+                        description,
+                        rating = 0.0,
+                        isWatched = true,
+                        imageUrlFromGCS)
                     withContext(Dispatchers.Main) {
                         onDismiss()
                     }

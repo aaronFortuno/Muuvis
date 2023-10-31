@@ -9,7 +9,7 @@ import java.io.OutputStream
 
 object ImageUtil {
 
-    fun InputStream.copyTo(out: OutputStream, bufferSize: Int = DEFAULT_BUFFER_SIZE): Long {
+    private fun InputStream.copyTo(out: OutputStream, bufferSize: Int = DEFAULT_BUFFER_SIZE): Long {
         var bytesCopied: Long = 0
         val buffer = ByteArray(bufferSize)
         var bytes = read(buffer)
@@ -68,12 +68,14 @@ object ImageUtil {
     }*/
 }
 
+/*
 fun getInputStreamFromUri(
     context: Context,
     uri: Uri
 ) : InputStream? {
     return context.contentResolver.openInputStream(uri)
 }
+*/
 
 // EXEMPLE D'IMPLEMENTACIÓ A ALTRES CLASSES
 /*
