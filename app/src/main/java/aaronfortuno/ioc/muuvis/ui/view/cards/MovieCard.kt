@@ -216,7 +216,7 @@ fun CardContent(
                                     painter = painterResource(R.drawable.ic_duration),
                                     contentDescription = null
                                 )
-                                Text(text = movie.duration.toString())
+                                Text(text = movie.duration.toString() + "min")
                             }
                         }
                         Column(
@@ -269,6 +269,7 @@ fun CardContent(
                     Text(
                         text = movie.title,
                         style = MaterialTheme.typography.headlineLarge,
+                        maxLines = 1,
                         color = Color.White,
                         overflow = TextOverflow.Ellipsis
                     )
